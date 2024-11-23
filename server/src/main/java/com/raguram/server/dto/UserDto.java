@@ -11,6 +11,7 @@ public class UserDto {
     private String name;
     @NotEmpty(message = "Username cannot be empty.")
     private String username;
-    @Min(8)
+    @NotEmpty(message = "Password Cannot be Empty")
+    @Size(min = 8, message = "Minimum 8 Characters")
     private String password;
 }

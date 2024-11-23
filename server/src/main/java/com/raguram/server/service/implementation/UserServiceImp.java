@@ -55,11 +55,14 @@ public class UserServiceImp implements UserService {
     @Override
     public LoginResponseDto login(LoginDto loginDto) {
         try{
+            logger.info("Checking Authentication");
             Authentication authentication = authManager
                     .authenticate(new UsernamePasswordAuthenticationToken(
                             loginDto.getUsername(),
                             loginDto.getPassword()));
+            logger.info("Checking Authentication Success");
             if(authentication.isAuthenticated()){
+                logger.info("User Authenticated");
                 String token = jwtService.generateToken(loginDto.getUsername());
                 Users user = userRepository.findByUsername(loginDto.getUsername());
                 LoginResponseDto loginResponseDto = new LoginResponseDto();
@@ -69,6 +72,7 @@ public class UserServiceImp implements UserService {
                 return loginResponseDto;
 
         }else{
+                logger.error("User not Authenticated");
                 throw new InvalidAuthenticationException("Authentication Failed");
             }
     }catch(Exception e){
@@ -89,11 +93,11 @@ public class UserServiceImp implements UserService {
                 return "Username already exists";
             }
 
-
+            String password = encoder.encode(userDto.getPassword());
             Users newUser = new Users();
             newUser.setName(userDto.getName());
             newUser.setUsername(userDto.getUsername());
-            newUser.setPassword(userDto.getPassword());
+            newUser.setPassword(password);
             userRepository.save(newUser);
 
             logger.info("User created successfully: {}", newUser.getUsername());
