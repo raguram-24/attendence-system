@@ -1,14 +1,15 @@
 package com.raguram.server.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
 @AllArgsConstructor
@@ -18,11 +19,18 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotBlank(message = "Name is mandatory")
+    @Column(nullable = false)
     private String name;
-    @NotBlank(message = "Username is mandatory")
+    @Column(nullable = false)
     private String username;
-    @NotBlank(message = "password is mandatory")
-    @Size(min = 8 ,message = "Password Must be more than 7 Characters")
+    @Column(nullable = false)
     private String password;
+
+
+
+    public Users(String name, String username, String password) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+    }
 }

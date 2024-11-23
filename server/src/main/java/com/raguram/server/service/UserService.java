@@ -12,5 +12,5 @@ public interface UserService {
     public Users getUserById(Integer id);
     public Users UpdateUser(Integer id, Users user);
     public LoginResponseDto login(LoginDto loginDto);
-    public Users register(UserDto userDto);
+    public String register(UserDto userDto);
 }
