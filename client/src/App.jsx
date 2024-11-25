@@ -4,7 +4,8 @@ import Error from './pages/Error';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Home from './pages/Home';
-
+import {action as SignUpAction} from './actions/SignUpAction';
+import{action as LoginAction}from './actions/LoginAction'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -14,13 +15,15 @@ const router = createBrowserRouter([
       {   
         index: true,
         element: <Login/>,
+        action:LoginAction
       },
       {
-        path: '/signup',
+        path: 'signup',
         element: <Signup/>,
+        action: SignUpAction,
       },
       {
-        path: '/home',
+        path: 'home',
         element: <Home/>,
       },
       // Add other routes here as needed

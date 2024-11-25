@@ -6,6 +6,8 @@ import com.raguram.server.dto.UserDto;
 import com.raguram.server.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     private UserService userService;
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/api/register")
-    public String register( @Valid @RequestBody UserDto userDto){
-        return userService.register(userDto);
+    public ResponseEntity<String> register( @Valid @RequestBody UserDto userDto){
+        return ResponseEntity.ok(userService.register(userDto));
     }
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/api/login")
-    public LoginResponseDto login(@Valid @RequestBody LoginDto loginDto){
-        return userService.login(loginDto);
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto loginDto){
+        return ResponseEntity.ok(userService.login(loginDto));
     }
 }

@@ -1,13 +1,21 @@
 import { useState } from 'react';
-import { Form } from 'react-router-dom';
+import { Form, useActionData } from 'react-router-dom';
 
 import classes from './Auth.module.css';
 
 function SignupForm() {
+  const data = useActionData();
   return (
     <>
       <Form method="post" className={classes.form}>
-        <h1>Signup</h1>
+      {data && data.errors && (
+          <ul>
+            {Object.values(data.errors).map((err) => (
+              <li key={err}>{err}</li>
+            ))}
+          </ul>
+        )}
+        {data && data.message && <p>{data.message}</p>}
         <p>
           <label htmlFor="name">Name</label>
           <input id="name" type="text" name="name" required />
@@ -21,7 +29,7 @@ function SignupForm() {
           <input id="password" type="password" name="password" required />
         </p>
         <div className={classes.actions}>
-          <button>Save</button>
+          <button>Register</button>
         </div>
       </Form>
     </>

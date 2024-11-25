@@ -5,6 +5,7 @@ import com.raguram.server.dto.LoginResponseDto;
 import com.raguram.server.dto.UserDto;
 import com.raguram.server.entity.Users;
 import com.raguram.server.exception.InvalidAuthenticationException;
+import com.raguram.server.exception.UserAlreadyFoundException;
 import com.raguram.server.repository.UserRepository;
 import com.raguram.server.service.JwtService;
 import com.raguram.server.service.UserService;
@@ -90,7 +91,7 @@ public class UserServiceImp implements UserService {
             Users existingUser = userRepository.findByUsername(userDto.getUsername());
             if (existingUser != null) {
                 logger.error("Username already exists: {}", userDto.getUsername());
-                return "Username already exists";
+                throw new UserAlreadyFoundException("Username already exists");
             }
 
             String password = encoder.encode(userDto.getPassword());
